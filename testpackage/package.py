@@ -8,8 +8,7 @@ def read_file(filename):
     #     content = fh.read()
     # return content
     fh = open(filename, 'r')
-    fh.read()
-    return
+    return fh.read()
 
 
 def tcp_out():
