@@ -12,23 +12,21 @@ def read_file(filename):
     return fh.read()
 
 
-def tcp_out():
-    HOST = '127.0.0.1'
-    PORT = 8888
+def resolve_dns(hostname):
+    return socket.gethostbyname(hostname)
 
+
+def tcp_out(host, port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((HOST, PORT))
+        s.connect((host, port))
         s.sendall(b"Hello, world")
         # data = s.recv(1024)
         # print(f"Received {data!r}")
 
 
-def tcp_in():
-    HOST = '127.0.0.1'
-    PORT = 8888
-
+def tcp_in(host, port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind((HOST, PORT))
+        s.bind((host, port))
         s.listen()
         conn, addr = s.accept()
         with conn:
@@ -40,21 +38,16 @@ def tcp_in():
                 conn.sendall(data)
 
 
-def udp_out():
-    UDP_IP = '127.0.0.1'
-    UDP_PORT = 8888
+def udp_out(host, port):
     MESSAGE = b'Hello, World!'
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
+    sock.sendto(MESSAGE, (host, port))
 
 
-def udp_in():
-    UDP_IP = '127.0.0.1'
-    UDP_PORT = 8888
-
+def udp_in(host, port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.bind((UDP_IP, UDP_PORT))
+    sock.bind((host, port))
 
     while True:
         data, addr = sock.recvfrom(1024)
