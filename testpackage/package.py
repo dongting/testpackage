@@ -19,9 +19,9 @@ def resolve_dns(hostname):
 def tcp_out(host, port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((host, port))
-        s.sendall(b"Hello, world")
+        s.sendall(b'GET / HTTP/1.1')
         # data = s.recv(1024)
-        # print(f"Received {data!r}")
+        # print(f'Received {data!r}')
 
 
 def tcp_in(host, port):
@@ -30,7 +30,7 @@ def tcp_in(host, port):
         s.listen()
         conn, addr = s.accept()
         with conn:
-            # print(f"Connected by {addr}")
+            # print(f'Connected by {addr}')
             while True:
                 data = conn.recv(1024)
                 if not data:
@@ -39,7 +39,7 @@ def tcp_in(host, port):
 
 
 def udp_out(host, port):
-    MESSAGE = b'Hello, World!'
+    MESSAGE = b'test'
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.sendto(MESSAGE, (host, port))
@@ -51,4 +51,4 @@ def udp_in(host, port):
 
     while True:
         data, addr = sock.recvfrom(1024)
-        # print("received message: %s" % data)
+        # print('received message: %s' % data)
